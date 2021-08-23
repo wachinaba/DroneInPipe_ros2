@@ -66,4 +66,9 @@ class PointEditorPainter(QtGui.QPainter):
   pass
 
 class GridStyle:
-  pass
+  def __init__(self, grid_size=100, subgrid_num=5, grid_color=QtGui.QColor("black"), subgrid_color=QtGui.QColor("gray"), center_color=QtGui.QColor("red")):
+    self.grid_size = grid_size
+    self.subgrid_num = subgrid_num
+    self.grid_color = grid_color
+    self.subgrid_color = subgrid_color
+    self.center_color = center_color
