@@ -62,3 +62,8 @@ class PointEditor(QtWidgets.QWidget):
         ql = QtCore.QLine(0, origin_y + displ, painter.device().width(), origin_y + displ)
         painter.drawLine(ql)
     
+class PointEditorPainter(QtGui.QPainter):
+  pass
+
+class GridStyle:
+  pass
