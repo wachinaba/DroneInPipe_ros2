@@ -13,9 +13,28 @@ class PointEditorPainter(QtGui.QPainter):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
 
-  def drawGrid(rect: QtCore.QRect, grid_style: GridStyle):
-    linenum_x = int(rect.width / (grid_style.grid_size*2))
-    linenum_y = int(rect.height / (grid_style.grid_size*2))
+  def drawGrid(self, rect: QtCore.QRect, grid_style: GridStyle):
+    linenum_half = QtCore.QPoint(*rect.size().toTuple()) / (grid_style.grid_size*2)
+    linenum = linenum_half * 2 + 1
+    origin = rect.center() - linenum_half * grid_style.grid_size
+
+    for j in range(grid_style.subgrid_num):
+      if j == 0:
+        self.setPen(grid_style.grid_pen)
+      else:
+        self.setPen(grid_style.subgrid_pen)
+      for i in range(-1, linenum.x()):
+        displacement = (i + j / grid_style.subgrid_num) * grid_style.grid_size
+        ql = QtCore.QLine(origin.x() + displacement, 0, origin.x() + displacement, rect.height())
+        self.drawLine(ql)
+      for i in range(-1, linenum.y()):
+        displacement = (i + j / grid_style.subgrid_num) * grid_style.grid_size
+        ql = QtCore.QLine(0, origin.y() + displacement, rect.width(), origin.y() + displacement)
+        self.drawLine(ql)
+    
+    self.setPen(grid_style.center_pen)
+    self.drawLine(QtCore.QLine(rect.center().x(), 0, rect.center().x(), rect.height()))
+    self.drawLine(QtCore.QLine(0, rect.center.y(), rect.width(), rect.center.y()))
 
 class PointEditor(QtWidgets.QWidget):
   """
