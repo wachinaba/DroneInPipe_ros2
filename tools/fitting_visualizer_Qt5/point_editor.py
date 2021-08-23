@@ -1,6 +1,22 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QWaitCondition, Qt, QtCriticalMsg, center
 
+class GridStyle:
+  def __init__(self, grid_size=100, subgrid_num=5, grid_pen=QtGui.QPen(QtGui.QColor("black")), subgrid_pen=QtGui.QPen(QtGui.QColor("gray")), center_pen=QtGui.QPen(QtGui.QColor("red"))):
+    self.grid_size = grid_size
+    self.subgrid_num = subgrid_num
+    self.grid_pen = grid_pen
+    self.subgrid_pen = subgrid_pen
+    self.center_pen = center_pen
+
+class PointEditorPainter(QtGui.QPainter):
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+  def drawGrid(rect: QtCore.QRect, grid_style: GridStyle):
+    linenum_x = int(rect.width / (grid_style.grid_size*2))
+    linenum_y = int(rect.height / (grid_style.grid_size*2))
+
 class PointEditor(QtWidgets.QWidget):
   """
   Custom Qt Widget to edit points(scan data).
@@ -62,17 +78,3 @@ class PointEditor(QtWidgets.QWidget):
         ql = QtCore.QLine(0, origin_y + displ, painter.device().width(), origin_y + displ)
         painter.drawLine(ql)
     
-class PointEditorPainter(QtGui.QPainter):
-  def __init__(self, *args, **kwargs):
-    super().__init__(*args, **kwargs)
-
-  def drawGrid(rect, grid_style):
-    pass
-
-class GridStyle:
-  def __init__(self, grid_size=100, subgrid_num=5, grid_pen=QtGui.QPen(QtGui.QColor("black")), subgrid_pen=QtGui.QPen(QtGui.QColor("gray")), center_pen=QtGui.QPen(QtGui.QColor("red"))):
-    self.grid_size = grid_size
-    self.subgrid_num = subgrid_num
-    self.grid_pen = grid_pen
-    self.subgrid_pen = subgrid_pen
-    self.center_pen = center_pen
