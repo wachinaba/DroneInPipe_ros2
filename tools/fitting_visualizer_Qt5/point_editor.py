@@ -14,8 +14,8 @@ class PointEditorPainter(QtGui.QPainter):
     super().__init__(*args, **kwargs)
 
   def drawGrid(self, rect: QtCore.QRect, grid_style: GridStyle):
-    linenum_half = QtCore.QPoint(*rect.size().toTuple()) / (grid_style.grid_size*2)
-    linenum = linenum_half * 2 + 1
+    linenum_half = QtCore.QPoint(rect.width(), rect.height()) / (grid_style.grid_size*2)
+    linenum = linenum_half * 2.5
     origin = rect.center() - linenum_half * grid_style.grid_size
 
     for j in range(grid_style.subgrid_num):
@@ -34,7 +34,7 @@ class PointEditorPainter(QtGui.QPainter):
     
     self.setPen(grid_style.center_pen)
     self.drawLine(QtCore.QLine(rect.center().x(), 0, rect.center().x(), rect.height()))
-    self.drawLine(QtCore.QLine(0, rect.center.y(), rect.width(), rect.center.y()))
+    self.drawLine(QtCore.QLine(0, rect.center().y(), rect.width(), rect.center().y()))
 
 class PointEditor(QtWidgets.QWidget):
   """
