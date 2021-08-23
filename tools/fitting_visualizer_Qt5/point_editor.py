@@ -63,12 +63,16 @@ class PointEditor(QtWidgets.QWidget):
         painter.drawLine(ql)
     
 class PointEditorPainter(QtGui.QPainter):
-  pass
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+  def drawGrid(rect, grid_style):
+    pass
 
 class GridStyle:
-  def __init__(self, grid_size=100, subgrid_num=5, grid_color=QtGui.QColor("black"), subgrid_color=QtGui.QColor("gray"), center_color=QtGui.QColor("red")):
+  def __init__(self, grid_size=100, subgrid_num=5, grid_pen=QtGui.QPen(QtGui.QColor("black")), subgrid_pen=QtGui.QPen(QtGui.QColor("gray")), center_pen=QtGui.QPen(QtGui.QColor("red"))):
     self.grid_size = grid_size
     self.subgrid_num = subgrid_num
-    self.grid_color = grid_color
-    self.subgrid_color = subgrid_color
-    self.center_color = center_color
+    self.grid_pen = grid_pen
+    self.subgrid_pen = subgrid_pen
+    self.center_pen = center_pen
