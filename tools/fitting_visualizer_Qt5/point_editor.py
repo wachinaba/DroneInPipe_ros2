@@ -48,30 +48,17 @@ class PointEditor(QtWidgets.QWidget):
     print("{0}, {1}, {2}, {3}".format(center_x, center_y, origin_x, origin_y))
 
     ##draw grid lines
-    ###vertical
-    for i in range(-1, linenum_x*2+1):
-      for j in range(self.SUBGRID_NUM):
+    for j in range(self.SUBGRID_NUM):
+      if j == 0: #if main grid
+        painter.setPen(pen_grid)
+      else:
+        painter.setPen(pen_subgrid)
+      for i in range(-1, linenum_x*2+1):
         displ = (i + j / self.SUBGRID_NUM) * self.GRID_SIZE
         ql = QtCore.QLine(origin_x + displ, 0, origin_x + displ, painter.device().height())
-        if j == 0: #if main grid
-          painter.setPen(pen_grid)
-        else:
-          painter.setPen(pen_subgrid)
         painter.drawLine(ql)
-
-    ###horizontal
-    for i in range(-1, linenum_y*2+1):
-      for j in range(self.SUBGRID_NUM):
+      for i in range(-1, linenum_y*2+1):
         displ = (i + j / self.SUBGRID_NUM) * self.GRID_SIZE
         ql = QtCore.QLine(0, origin_y + displ, painter.device().width(), origin_y + displ)
-        if j == 0: #if main grid
-          painter.setPen(pen_grid)
-        else:
-          painter.setPen(pen_subgrid)
         painter.drawLine(ql)
-
-      
-
-
-
-
+    
